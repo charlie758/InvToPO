@@ -79,6 +79,21 @@ st.markdown(
   .stFormSubmitButton > button:hover {
     background-color: #2D4A7A !important;
   }
+  /* Force submit button container full width + centered text */
+  .stFormSubmitButton,
+  .stApp .stFormSubmitButton,
+  .stApp [data-testid="stFormSubmitButton"] {
+    width: 100% !important;
+  }
+  .stFormSubmitButton > button > div,
+  .stFormSubmitButton > button > span,
+  .stFormSubmitButton > button > p,
+  .stApp .stFormSubmitButton > button > div,
+  .stApp [data-testid="stForm"] .stFormSubmitButton > button > div {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
 
   /* ── Info / Summary Box ── */
   .info-box {
@@ -126,12 +141,14 @@ st.markdown(
     padding-bottom: 0 !important;
     line-height: 1.2;
   }
-  .field-desc {
+  .field-desc, .stApp .field-desc, .stApp p.field-desc,
+  .stApp [data-testid="stForm"] .field-desc,
+  .stApp [data-testid="stMarkdownContainer"] .field-desc {
     color: #64748B !important;
-    font-size: 0.58rem;
+    font-size: 0.52rem !important;
     margin: 0 0 0.25rem 0 !important;
     padding: 0 !important;
-    line-height: 1.15;
+    line-height: 1.15 !important;
   }
   /* Remove extra spacing Streamlit adds between markdown blocks */
   .stApp [data-testid="stForm"] [data-testid="stMarkdownContainer"] {
