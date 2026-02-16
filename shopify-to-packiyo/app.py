@@ -140,10 +140,11 @@ st.markdown(
   .stApp [data-testid="stForm"] .field-desc,
   .stApp [data-testid="stMarkdownContainer"] .field-desc {
     color: #64748B !important;
-    font-size: 0.73rem !important;
-    margin: 0 0 0.25rem 0 !important;
+    font-size: 0.78rem !important;
+    margin: 0.15rem 0 0.15rem 0 !important;
     padding: 0 !important;
-    line-height: 1.15 !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
   }
   /* Remove extra spacing Streamlit adds between markdown blocks */
   .stApp [data-testid="stForm"] [data-testid="stMarkdownContainer"] {
@@ -317,7 +318,7 @@ st.markdown(
 # ── Step 1 – Upload ──
 st.markdown('<span class="step-badge">STEP 1</span>', unsafe_allow_html=True)
 st.subheader("Upload Shopify Inventory CSV")
-st.markdown('<p class="field-desc" style="margin-top:-0.5rem !important;">On your Shopify Store navigate to <strong>Products → Inventory</strong> and use the <strong>"Export"</strong> button in the top right corner</p>', unsafe_allow_html=True)
+st.markdown('<p class="field-desc">On your Shopify Store navigate to <strong>Products → Inventory</strong> and use the <strong>"Export"</strong> button in the top right corner</p>', unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader(
     "Drag and drop or browse for your Shopify inventory export",
