@@ -70,50 +70,70 @@ st.markdown(
     font-size: 0.92rem;
   }
 
-  /* ── Force light-mode text on all Streamlit elements ── */
-  .stApp, .stApp * {
-    color-scheme: light !important;
-  }
-  .stApp label, .stApp .stMarkdown, .stApp p, .stApp span,
-  .stApp .stTextInput label, .stApp .stSelectbox label,
-  .stApp .stMultiSelect label, .stApp .stDateInput label {
+  /* ── Force light color-scheme globally ── */
+  .stApp { color-scheme: light !important; }
+
+  /* ── Dark text for Streamlit form/content areas only ── */
+  .stApp [data-testid="stFormSubmitButton"] label,
+  .stApp [data-testid="stForm"] label,
+  .stApp [data-testid="stForm"] p,
+  .stApp [data-testid="stForm"] span,
+  .stApp .stTextInput label,
+  .stApp .stSelectbox label,
+  .stApp .stMultiSelect label,
+  .stApp .stDateInput label,
+  .stApp [data-testid="stWidgetLabel"] {
     color: #1E293B !important;
   }
-  .stApp h1, .stApp h2, .stApp h3, .stApp h4 {
+  /* Subheadings (Step titles like "Upload Shopify...") */
+  .stApp [data-testid="stSubheader"],
+  .stApp h2, .stApp h3 {
     color: #1E293B !important;
   }
-  /* Help-text (descriptions) under form fields */
-  .stApp .stTooltipIcon, .stApp [data-testid="stTooltipContent"],
-  .stApp small, .stApp .caption,
-  .stApp div[data-testid="InputInstructions"],
-  .stApp .stHelp, .stApp [class*="help"],
+  /* Help-text / descriptions under form fields */
+  .stApp [data-testid="stTooltipContent"],
+  .stApp [data-testid="InputInstructions"],
   .stApp [data-testid="stWidgetLabel"] small,
-  .stApp [data-testid="stWidgetLabel"] p {
+  .stApp [data-testid="stWidgetLabel"] .caption {
     color: #64748B !important;
   }
   /* Placeholder text */
   .stApp input::placeholder, .stApp textarea::placeholder {
     color: #94A3B8 !important;
   }
-  /* Input fields themselves */
+  /* Input fields */
   .stApp input, .stApp select, .stApp textarea,
   .stApp [data-baseweb="input"] input,
   .stApp [data-baseweb="select"] div {
     color: #1E293B !important;
     background-color: #FFFFFF !important;
   }
-  /* File uploader text */
-  .stApp [data-testid="stFileUploader"],
-  .stApp [data-testid="stFileUploader"] * {
+  /* File uploader – only the label + file-name text, NOT the drop zone */
+  .stApp [data-testid="stFileUploader"] label,
+  .stApp [data-testid="stFileUploader"] [data-testid="stMarkdownContainer"],
+  .stApp [data-testid="stFileUploaderFileName"] {
     color: #1E293B !important;
   }
-  /* Override header banner text back to white */
-  .hlc-header h1 { color: #FFFFFF !important; }
-  .hlc-header p { color: #CBD5E1 !important; }
-  /* Step badges stay white */
-  .step-badge { color: #fff !important; }
+  /* File uploader drop zone – keep light text on dark bg */
+  .stApp [data-testid="stFileUploaderDropzone"],
+  .stApp [data-testid="stFileUploaderDropzone"] span,
+  .stApp [data-testid="stFileUploaderDropzone"] small,
+  .stApp [data-testid="stFileUploaderDropzone"] button {
+    color: #FFFFFF !important;
+  }
+  /* Success / error alert text */
+  .stApp [data-testid="stAlert"] p,
+  .stApp [data-testid="stAlert"] span {
+    color: #1E293B !important;
+  }
   /* Info box text */
   .info-box, .info-box * { color: #1E293B !important; }
+
+  /* ── Preserve white text on dark-background custom elements ── */
+  .hlc-header, .hlc-header * { color: inherit; }
+  .hlc-header h1 { color: #FFFFFF !important; }
+  .hlc-header p  { color: #CBD5E1 !important; }
+  .step-badge    { color: #FFFFFF !important; }
 
   /* ── Footer ── */
   .hlc-footer {
