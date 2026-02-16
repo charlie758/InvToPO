@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import datetime, date
 import io
 import base64
+import streamlit.components.v1 as components
 
 # ──────────────────────────────────────────────
 #  Page Config
@@ -111,19 +112,29 @@ st.markdown(
   .stApp [data-testid="stWidgetLabel"] .caption {
     color: #64748B !important;
   }
-  /* Tooltip ? icons – make visible on light background */
-  .stApp [data-testid="stTooltipIcon"],
+  /* Hide default tooltip circle icon, replace with grey ? */
   .stApp [data-testid="stTooltipIcon"] svg,
-  .stApp [data-testid="stTooltipIcon"] circle,
-  .stApp [data-testid="stTooltipIcon"] path,
-  .stApp [data-testid="stTooltipIcon"] line,
-  .stApp .stTooltipIcon,
-  .stApp .stTooltipIcon svg,
-  .stApp [data-testid="stForm"] [data-testid="stTooltipIcon"],
-  .stApp [data-testid="stForm"] [data-testid="stTooltipIcon"] svg {
-    color: #64748B !important;
-    fill: #64748B !important;
-    stroke: #64748B !important;
+  .stApp .stTooltipIcon svg {
+    display: none !important;
+  }
+  .stApp [data-testid="stTooltipIcon"],
+  .stApp .stTooltipIcon {
+    cursor: help;
+  }
+  .stApp [data-testid="stTooltipIcon"]::before,
+  .stApp .stTooltipIcon::before {
+    content: "?";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #94A3B8;
+    color: #FFFFFF !important;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
   }
   /* Placeholder text */
   .stApp input::placeholder, .stApp textarea::placeholder {
@@ -135,6 +146,7 @@ st.markdown(
   .stApp [data-baseweb="select"] div {
     color: #1E293B !important;
     background-color: #FFFFFF !important;
+    caret-color: #1E293B !important;
   }
   /* File uploader – only the label + file-name text, NOT the drop zone */
   .stApp [data-testid="stFileUploader"] label,
@@ -420,17 +432,40 @@ if uploaded_file is not None:
 
             st.dataframe(output_df, use_container_width=True, hide_index=True)
 
-            # CSV download via base64 link (works inside Notion iframes)
+            # CSV download via JS Blob (works inside Notion iframes)
             csv_str = output_df.to_csv(index=False)
             b64 = base64.b64encode(csv_str.encode()).decode()
             filename = f"{po_name.strip()}_packiyo_po.csv"
-            href = f"data:text/csv;base64,{b64}"
 
-            st.markdown(
-                f'<a href="{href}" download="{filename}" target="_blank" '
-                f'class="dl-link">Download PO CSV</a>',
-                unsafe_allow_html=True,
-            )
+            download_html = f"""
+            <html><body>
+            <button id="dlBtn" style="
+              display:block; width:100%; padding:0.65rem 2rem;
+              background-color:#1B2A4A; color:#FFFFFF;
+              border:none; border-radius:8px; cursor:pointer;
+              font-weight:600; font-size:0.95rem; font-family:inherit;
+              transition: background-color 0.2s;
+            " onmouseover="this.style.backgroundColor='#2D4A7A'"
+              onmouseout="this.style.backgroundColor='#1B2A4A'">
+              Download PO CSV
+            </button>
+            <script>
+            document.getElementById('dlBtn').addEventListener('click', function() {{
+              var csvData = atob('{b64}');
+              var blob = new Blob([csvData], {{type: 'text/csv;charset=utf-8;'}});
+              var url = URL.createObjectURL(blob);
+              var a = document.createElement('a');
+              a.href = url;
+              a.download = '{filename}';
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+            }});
+            </script>
+            </body></html>
+            """
+            components.html(download_html, height=50)
 
 # ── Footer ──
 st.markdown(
