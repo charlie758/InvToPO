@@ -144,7 +144,7 @@ st.markdown(
     margin: 0.15rem 0 0.15rem 0 !important;
     padding: 0 !important;
     line-height: 1.2 !important;
-    text-align: center !important;
+    text-align: left !important;
   }
   /* Remove extra spacing Streamlit adds between markdown blocks */
   .stApp [data-testid="stForm"] [data-testid="stMarkdownContainer"] {
