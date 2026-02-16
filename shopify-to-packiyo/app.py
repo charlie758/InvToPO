@@ -55,44 +55,41 @@ st.markdown(
     background-color: #1B2A4A !important;
     color: #FFFFFF !important;
     border: none !important;
-    padding: 0.55rem 2rem !important;
     border-radius: 8px !important;
     font-weight: 600 !important;
     font-size: 0.95rem !important;
-    width: 100%;
+    width: 100% !important;
+    height: 2.8rem !important;
+    padding: 0 !important;
+    margin: 0 !important;
     text-align: center !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    line-height: 2.8rem !important;
   }
-  /* Button text spans must also be white */
+  /* Inner elements: reset all spacing, center text */
   .stFormSubmitButton > button *,
-  .stApp .stFormSubmitButton > button span,
-  .stApp .stFormSubmitButton > button p,
-  .stApp [data-testid="stForm"] .stFormSubmitButton > button span,
-  .stApp [data-testid="stForm"] .stFormSubmitButton > button p,
+  .stApp .stFormSubmitButton > button *,
+  .stApp [data-testid="stForm"] .stFormSubmitButton > button * {
+    color: #FFFFFF !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 2.8rem !important;
+    height: 2.8rem !important;
+    display: inline !important;
+    vertical-align: middle !important;
+  }
   .stDownloadButton > button *,
-  .stApp .stDownloadButton > button span {
+  .stApp .stDownloadButton > button * {
     color: #FFFFFF !important;
   }
   .stDownloadButton > button:hover,
   .stFormSubmitButton > button:hover {
     background-color: #2D4A7A !important;
   }
-  /* Force submit button container full width + centered text */
+  /* Force submit button container full width */
   .stFormSubmitButton,
   .stApp .stFormSubmitButton,
   .stApp [data-testid="stFormSubmitButton"] {
     width: 100% !important;
-  }
-  .stFormSubmitButton > button > div,
-  .stFormSubmitButton > button > span,
-  .stFormSubmitButton > button > p,
-  .stApp .stFormSubmitButton > button > div,
-  .stApp [data-testid="stForm"] .stFormSubmitButton > button > div {
-    width: 100% !important;
-    text-align: center !important;
-    justify-content: center !important;
   }
 
   /* ── Info / Summary Box ── */
@@ -145,7 +142,7 @@ st.markdown(
   .stApp [data-testid="stForm"] .field-desc,
   .stApp [data-testid="stMarkdownContainer"] .field-desc {
     color: #64748B !important;
-    font-size: 0.52rem !important;
+    font-size: 0.70rem !important;
     margin: 0 0 0.25rem 0 !important;
     padding: 0 !important;
     line-height: 1.15 !important;
