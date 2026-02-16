@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, date
 import io
+import base64
 
 # ──────────────────────────────────────────────
 #  Page Config
@@ -46,14 +47,27 @@ st.markdown(
 
   /* ── Buttons ── */
   .stDownloadButton > button,
-  .stFormSubmitButton > button {
+  .stFormSubmitButton > button,
+  .stApp .stFormSubmitButton > button,
+  .stApp [data-testid="stForm"] .stFormSubmitButton > button,
+  .stApp [data-testid="stFormSubmitButton"] > button {
     background-color: #1B2A4A !important;
-    color: #fff !important;
+    color: #FFFFFF !important;
     border: none !important;
     padding: 0.55rem 2rem !important;
     border-radius: 8px !important;
     font-weight: 600 !important;
     width: 100%;
+  }
+  /* Button text spans must also be white */
+  .stFormSubmitButton > button *,
+  .stApp .stFormSubmitButton > button span,
+  .stApp .stFormSubmitButton > button p,
+  .stApp [data-testid="stForm"] .stFormSubmitButton > button span,
+  .stApp [data-testid="stForm"] .stFormSubmitButton > button p,
+  .stDownloadButton > button *,
+  .stApp .stDownloadButton > button span {
+    color: #FFFFFF !important;
   }
   .stDownloadButton > button:hover,
   .stFormSubmitButton > button:hover {
@@ -97,6 +111,20 @@ st.markdown(
   .stApp [data-testid="stWidgetLabel"] .caption {
     color: #64748B !important;
   }
+  /* Tooltip ? icons – make visible on light background */
+  .stApp [data-testid="stTooltipIcon"],
+  .stApp [data-testid="stTooltipIcon"] svg,
+  .stApp [data-testid="stTooltipIcon"] circle,
+  .stApp [data-testid="stTooltipIcon"] path,
+  .stApp [data-testid="stTooltipIcon"] line,
+  .stApp .stTooltipIcon,
+  .stApp .stTooltipIcon svg,
+  .stApp [data-testid="stForm"] [data-testid="stTooltipIcon"],
+  .stApp [data-testid="stForm"] [data-testid="stTooltipIcon"] svg {
+    color: #64748B !important;
+    fill: #64748B !important;
+    stroke: #64748B !important;
+  }
   /* Placeholder text */
   .stApp input::placeholder, .stApp textarea::placeholder {
     color: #94A3B8 !important;
@@ -134,6 +162,26 @@ st.markdown(
   .hlc-header h1 { color: #FFFFFF !important; }
   .hlc-header p  { color: #CBD5E1 !important; }
   .step-badge    { color: #FFFFFF !important; }
+
+  /* ── Download link styled as button (works in Notion iframes) ── */
+  .dl-link {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    background-color: #1B2A4A;
+    color: #FFFFFF !important;
+    padding: 0.65rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none !important;
+    margin-top: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  .dl-link:hover {
+    background-color: #2D4A7A;
+    color: #FFFFFF !important;
+  }
 
   /* ── Footer ── */
   .hlc-footer {
@@ -235,7 +283,7 @@ st.markdown(
     """
 <div class="hlc-header">
     <h1>Shopify → Packiyo PO Converter</h1>
-    <p>Convert Shopify inventory exports into Packiyo Purchase Order format</p>
+    <p>For Your First PO: Convert Shopify inventory exports into Packiyo Purchase Order format</p>
 </div>
 """,
     unsafe_allow_html=True,
@@ -372,15 +420,16 @@ if uploaded_file is not None:
 
             st.dataframe(output_df, use_container_width=True, hide_index=True)
 
-            # CSV download
-            buf = io.StringIO()
-            output_df.to_csv(buf, index=False)
+            # CSV download via base64 link (works inside Notion iframes)
+            csv_str = output_df.to_csv(index=False)
+            b64 = base64.b64encode(csv_str.encode()).decode()
+            filename = f"{po_name.strip()}_packiyo_po.csv"
+            href = f"data:text/csv;base64,{b64}"
 
-            st.download_button(
-                label="Download PO CSV",
-                data=buf.getvalue(),
-                file_name=f"{po_name.strip()}_packiyo_po.csv",
-                mime="text/csv",
+            st.markdown(
+                f'<a href="{href}" download="{filename}" target="_blank" '
+                f'class="dl-link">Download PO CSV</a>',
+                unsafe_allow_html=True,
             )
 
 # ── Footer ──
