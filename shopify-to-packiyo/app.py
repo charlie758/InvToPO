@@ -70,9 +70,54 @@ st.markdown(
     font-size: 0.92rem;
   }
 
+  /* ── Force light-mode text on all Streamlit elements ── */
+  .stApp, .stApp * {
+    color-scheme: light !important;
+  }
+  .stApp label, .stApp .stMarkdown, .stApp p, .stApp span,
+  .stApp .stTextInput label, .stApp .stSelectbox label,
+  .stApp .stMultiSelect label, .stApp .stDateInput label {
+    color: #1E293B !important;
+  }
+  .stApp h1, .stApp h2, .stApp h3, .stApp h4 {
+    color: #1E293B !important;
+  }
+  /* Help-text (descriptions) under form fields */
+  .stApp .stTooltipIcon, .stApp [data-testid="stTooltipContent"],
+  .stApp small, .stApp .caption,
+  .stApp div[data-testid="InputInstructions"],
+  .stApp .stHelp, .stApp [class*="help"],
+  .stApp [data-testid="stWidgetLabel"] small,
+  .stApp [data-testid="stWidgetLabel"] p {
+    color: #64748B !important;
+  }
+  /* Placeholder text */
+  .stApp input::placeholder, .stApp textarea::placeholder {
+    color: #94A3B8 !important;
+  }
+  /* Input fields themselves */
+  .stApp input, .stApp select, .stApp textarea,
+  .stApp [data-baseweb="input"] input,
+  .stApp [data-baseweb="select"] div {
+    color: #1E293B !important;
+    background-color: #FFFFFF !important;
+  }
+  /* File uploader text */
+  .stApp [data-testid="stFileUploader"],
+  .stApp [data-testid="stFileUploader"] * {
+    color: #1E293B !important;
+  }
+  /* Override header banner text back to white */
+  .hlc-header h1 { color: #FFFFFF !important; }
+  .hlc-header p { color: #CBD5E1 !important; }
+  /* Step badges stay white */
+  .step-badge { color: #fff !important; }
+  /* Info box text */
+  .info-box, .info-box * { color: #1E293B !important; }
+
   /* ── Footer ── */
   .hlc-footer {
-    text-align: center; color: #94A3B8;
+    text-align: center; color: #94A3B8 !important;
     font-size: 0.78rem; margin-top: 3rem;
     padding-top: 1rem; border-top: 1px solid #E2E8F0;
   }
