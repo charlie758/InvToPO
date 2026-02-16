@@ -59,23 +59,20 @@ st.markdown(
     font-weight: 600 !important;
     font-size: 0.95rem !important;
     width: 100% !important;
-    height: 2.8rem !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    min-height: 3.2rem !important;
+    padding: 0.75rem 2.5rem !important;
     text-align: center !important;
-    line-height: 2.8rem !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
   }
-  /* Inner elements: reset all spacing, center text */
+  /* Inner elements: white text, centered */
   .stFormSubmitButton > button *,
   .stApp .stFormSubmitButton > button *,
   .stApp [data-testid="stForm"] .stFormSubmitButton > button * {
     color: #FFFFFF !important;
-    padding: 0 !important;
     margin: 0 !important;
-    line-height: 2.8rem !important;
-    height: 2.8rem !important;
-    display: inline !important;
-    vertical-align: middle !important;
+    padding: 0 !important;
   }
   .stDownloadButton > button *,
   .stApp .stDownloadButton > button * {
@@ -90,6 +87,7 @@ st.markdown(
   .stApp .stFormSubmitButton,
   .stApp [data-testid="stFormSubmitButton"] {
     width: 100% !important;
+    clear: both !important;
   }
 
   /* ── Info / Summary Box ── */
@@ -142,7 +140,7 @@ st.markdown(
   .stApp [data-testid="stForm"] .field-desc,
   .stApp [data-testid="stMarkdownContainer"] .field-desc {
     color: #64748B !important;
-    font-size: 0.70rem !important;
+    font-size: 0.73rem !important;
     margin: 0 0 0.25rem 0 !important;
     padding: 0 !important;
     line-height: 1.15 !important;
