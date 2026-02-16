@@ -226,7 +226,7 @@ if uploaded_file is not None:
         with col1:
             po_name = st.text_input(
                 "Purchase Order Name",
-                placeholder="e.g. PNY_PO_0001",
+                placeholder="e.g. ABC_PO_0001",
                 help="The Name of This Purchase Order",
             )
             warehouse = st.selectbox(
@@ -236,7 +236,7 @@ if uploaded_file is not None:
             )
             customer = st.text_input(
                 "Customer",
-                placeholder="e.g. Phillips NYC",
+                placeholder="e.g. ABC Brand",
                 help="Your Brand Name — Must Match Brand Name in Packiyo",
             )
             locations_selected = st.multiselect(
