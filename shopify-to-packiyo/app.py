@@ -317,6 +317,7 @@ st.markdown(
 # ── Step 1 – Upload ──
 st.markdown('<span class="step-badge">STEP 1</span>', unsafe_allow_html=True)
 st.subheader("Upload Shopify Inventory CSV")
+st.markdown('<p class="field-desc" style="margin-top:-0.5rem !important;">On your Shopify Store navigate to <strong>Products → Inventory</strong> and use the <strong>"Export"</strong> button in the top right corner</p>', unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader(
     "Drag and drop or browse for your Shopify inventory export",
