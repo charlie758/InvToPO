@@ -58,7 +58,12 @@ st.markdown(
     padding: 0.55rem 2rem !important;
     border-radius: 8px !important;
     font-weight: 600 !important;
+    font-size: 0.95rem !important;
     width: 100%;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   /* Button text spans must also be white */
   .stFormSubmitButton > button *,
@@ -123,10 +128,10 @@ st.markdown(
   }
   .field-desc {
     color: #64748B !important;
-    font-size: 0.72rem;
+    font-size: 0.58rem;
     margin: 0 0 0.25rem 0 !important;
     padding: 0 !important;
-    line-height: 1.2;
+    line-height: 1.15;
   }
   /* Remove extra spacing Streamlit adds between markdown blocks */
   .stApp [data-testid="stForm"] [data-testid="stMarkdownContainer"] {
@@ -446,23 +451,31 @@ if uploaded_file is not None:
             filename = f"{po_name.strip()}_packiyo_po.csv"
 
             download_html = f"""
-            <html><body>
+            <html><body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
             <button id="dlBtn" style="
-              display:block; width:100%; padding:0.65rem 2rem;
+              display:flex; width:100%; padding:0.55rem 2rem;
               background-color:#1B2A4A; color:#FFFFFF;
               border:none; border-radius:8px; cursor:pointer;
-              font-weight:600; font-size:0.95rem; font-family:inherit;
+              font-weight:600; font-size:0.95rem;
+              font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+              align-items:center; justify-content:center;
               transition: background-color 0.2s;
+              box-sizing:border-box;
             " onmouseover="this.style.backgroundColor='#2D4A7A'"
               onmouseout="this.style.backgroundColor='#1B2A4A'">
               Download PO CSV
             </button>
+            <p style="color:#64748B;font-size:0.78rem;line-height:1.45;margin:0.8rem 0 0 0;padding:0;">
+              Please review the contents of the spreadsheet to ensure they are accurate.
+              Once confirming it is accurate, you can import this CSV into Packiyo via
+              <strong>Inbound &rarr; Purchase Orders</strong> then clicking the
+              <strong>Import CSV</strong> icon in the top right corner (below the
+              "Create PO" button, the icon on the left).
+            </p>
             <script>
             var b64Data = '{b64}';
             var fname = '{filename}';
             document.getElementById('dlBtn').addEventListener('click', function() {{
-              // Open new window and write a self-contained page that
-              // creates its OWN Blob and triggers download from its own origin
               var w = window.open('', '_blank');
               if (w) {{
                 w.document.write(
@@ -487,7 +500,7 @@ if uploaded_file is not None:
             </script>
             </body></html>
             """
-            components.html(download_html, height=50)
+            components.html(download_html, height=120)
 
 # ── Footer ──
 st.markdown(
