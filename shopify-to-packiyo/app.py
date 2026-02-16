@@ -112,29 +112,12 @@ st.markdown(
   .stApp [data-testid="stWidgetLabel"] .caption {
     color: #64748B !important;
   }
-  /* Hide default tooltip circle icon, replace with grey ? */
-  .stApp [data-testid="stTooltipIcon"] svg,
-  .stApp .stTooltipIcon svg {
-    display: none !important;
-  }
-  .stApp [data-testid="stTooltipIcon"],
-  .stApp .stTooltipIcon {
-    cursor: help;
-  }
-  .stApp [data-testid="stTooltipIcon"]::before,
-  .stApp .stTooltipIcon::before {
-    content: "?";
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: #94A3B8;
-    color: #FFFFFF !important;
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 1;
+  /* Inline field descriptions */
+  .field-desc {
+    color: #64748B !important;
+    font-size: 0.82rem;
+    margin: -0.3rem 0 0.15rem 0;
+    line-height: 1.3;
   }
   /* Placeholder text */
   .stApp input::placeholder, .stApp textarea::placeholder {
@@ -349,41 +332,60 @@ if uploaded_file is not None:
         col1, col2 = st.columns(2)
 
         with col1:
+            st.markdown("**Purchase Order Name**")
+            st.markdown('<p class="field-desc">The Name of This Purchase Order</p>', unsafe_allow_html=True)
             po_name = st.text_input(
                 "Purchase Order Name",
                 placeholder="e.g. ABC_PO_0001",
-                help="The Name of This Purchase Order",
+                label_visibility="collapsed",
             )
+
+            st.markdown("**Warehouse**")
+            st.markdown('<p class="field-desc">HLC Location This PO is Headed To</p>', unsafe_allow_html=True)
             warehouse = st.selectbox(
                 "Warehouse",
                 WAREHOUSE_OPTIONS,
-                help="HLC Location This PO is Headed To",
+                label_visibility="collapsed",
             )
+
+            st.markdown("**Customer**")
+            st.markdown('<p class="field-desc">Your Brand Name — Must Match Brand Name in Packiyo</p>', unsafe_allow_html=True)
             customer = st.text_input(
                 "Customer",
                 placeholder="e.g. ABC Brand",
-                help="Your Brand Name — Must Match Brand Name in Packiyo",
+                label_visibility="collapsed",
             )
+
+            st.markdown("**Location to Pull From**")
+            st.markdown('<p class="field-desc">What Shopify Inventory Locations To Pull Inventory From</p>', unsafe_allow_html=True)
             locations_selected = st.multiselect(
                 "Location to Pull From",
                 valid_locations,
-                help="What Shopify Inventory Locations To Pull Inventory From",
+                label_visibility="collapsed",
             )
 
         with col2:
+            st.markdown("**Expected Arrival**")
+            st.markdown('<p class="field-desc">Date PO is Expected to Arrive at Warehouse</p>', unsafe_allow_html=True)
             expected_date = st.date_input(
                 "Expected Arrival",
-                help="Date PO is Expected to Arrive at Warehouse",
+                label_visibility="collapsed",
             )
+
+            st.markdown("**PO Tracking Number**")
+            st.markdown('<p class="field-desc">Tracking Number for PO Shipment</p>', unsafe_allow_html=True)
             tracking_number = st.text_input(
                 "PO Tracking Number",
                 placeholder="e.g. 1000001112",
-                help="Tracking Number for PO Shipment",
+                label_visibility="collapsed",
             )
+
+            st.markdown("**PO Tracking URL**")
+            st.markdown('<p class="field-desc">Link to Tracking for PO Delivery</p>', unsafe_allow_html=True)
             tracking_url = st.text_input(
                 "PO Tracking URL",
                 placeholder="e.g. https://track.example.com/...",
-                help="Link to Tracking for PO Delivery",
+                label_visibility="collapsed",
             )
 
         submitted = st.form_submit_button("Generate Purchase Order CSV")
@@ -453,14 +455,28 @@ if uploaded_file is not None:
             document.getElementById('dlBtn').addEventListener('click', function() {{
               var csvData = atob('{b64}');
               var blob = new Blob([csvData], {{type: 'text/csv;charset=utf-8;'}});
-              var url = URL.createObjectURL(blob);
-              var a = document.createElement('a');
-              a.href = url;
-              a.download = '{filename}';
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-              URL.revokeObjectURL(url);
+              var blobUrl = URL.createObjectURL(blob);
+
+              // Open a new tab to bypass Notion iframe download sandbox
+              var w = window.open('about:blank', '_blank');
+              if (w) {{
+                w.document.title = 'Downloading {filename}...';
+                var a = w.document.createElement('a');
+                a.href = blobUrl;
+                a.download = '{filename}';
+                w.document.body.appendChild(a);
+                a.click();
+                setTimeout(function() {{ w.close(); }}, 1500);
+              }} else {{
+                // Popup blocked fallback: direct attempt
+                var a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = '{filename}';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+              }}
+              setTimeout(function() {{ URL.revokeObjectURL(blobUrl); }}, 3000);
             }});
             </script>
             </body></html>
